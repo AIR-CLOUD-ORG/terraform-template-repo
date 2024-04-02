@@ -1,0 +1,26 @@
+name: Validate terraform code
+
+on: 
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+
+  Terraform_Validate:
+    name: Terraform Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4.1.2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with: 
+          terraform_version: "1.1.7"
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Format
+        run: terraform fmt
+      - name: Terraform Validate
+        run: terraform validate
